@@ -60,6 +60,7 @@ void weight_smooth(unsigned int *input_data, unsigned int *output_data, int data
                 }
                 #if 1
                 printf("========================================================================\n");
+                #if 1
                 for(int i = 0; i < 44; i++) {
                     for (int j = 0; j < 44; j++) {
                         printf("%1d,", local_input_data[i * 44 + j]);
@@ -67,6 +68,21 @@ void weight_smooth(unsigned int *input_data, unsigned int *output_data, int data
                     printf("\n");
                 }
                 #endif
+                for (int i = 2; i < 42; i++) {
+                    for (int j = 2; j < 42;j ++) {
+                        unsigned int sum = 0;
+                        printf("(%d, %d)---------------------------------------\n", i - 2, j - 2);
+                        for (int weight_h = -2; weight_h < 3; weight_h++) {
+                            for (int weight_w = -2; weight_w < 3; weight_w++) {
+                                sum += local_weight[(weight_h + 2) * 5 + weight_w + 2] * local_input_data[(i + weight_h) * 44 + (j + weight_w)]; 
+                                printf("%1d,", local_input_data[(i + weight_h) * 44 + (j + weight_w)]);
+                            }
+                            printf("\n");
+                        }
+                    }
+                }
+                #endif
+
             }
         }
     }
@@ -77,7 +93,7 @@ void weight_smooth(unsigned int *input_data, unsigned int *output_data, int data
 int main()
 {
 //void weight_smooth(unsigned int *input_data, unsigned int *output_data, int data_len, int c, int h, int w)
-#define TMP_WIDTH   120 
+#define TMP_WIDTH   80 
     unsigned int input_data[TMP_WIDTH*TMP_WIDTH] = {0};
     unsigned int output_data[TMP_WIDTH*TMP_WIDTH];
 
